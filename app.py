@@ -139,9 +139,10 @@ def update_post(id):
 def delete_post(id):
     if id is not None:
         deletedpost = Post.query.filter_by(post_id=id,user_id=get_value(con,"user_id")[1]).first()
-        db.session.delete(deletedpost)
-        db.session.commit()
-        return jsonify(deletedpost.serialize())
+        if deletedpost:
+            db.session.delete(deletedpost)
+            db.session.commit()
+            return jsonify(deletedpost.serialize())
     return {"error": "Please provide correct id"}
 
 
